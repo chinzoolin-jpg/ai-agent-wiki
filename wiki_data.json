@@ -1,0 +1,212 @@
+{
+  "topic": "AI Agent 是什麼",
+  "read_at": "2026-11-21",
+  "sources": [
+    {
+      "id": "S1",
+      "org": "OpenAI",
+      "title": "A practical guide to building agents",
+      "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
+      "notes": [
+        "實務上常把 agent 看成模型、工具和清楚的指令一起運作",
+        "工具可能拿來找資料，也可能拿來執行操作",
+        "單一 agent 就能用迴圈跑到完成條件，不是每個任務都要多 agent"
+      ],
+      "concepts": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C7"
+      ]
+    },
+    {
+      "id": "S2",
+      "org": "Anthropic",
+      "title": "Building effective AI agents",
+      "url": "https://www.anthropic.com/research/building-effective-agents",
+      "notes": [
+        "分清楚事先排好順序的 workflow，和會自行選步驟的 agent",
+        "增強型 LLM 可以結合 retrieval、tools、memory",
+        "複雜任務可反覆利用工具回傳結果來修正下一步，也要有終止條件"
+      ],
+      "concepts": [
+        "C1",
+        "C2",
+        "C4",
+        "C6",
+        "C7"
+      ]
+    },
+    {
+      "id": "S3",
+      "org": "Google Cloud",
+      "title": "What are AI agents?",
+      "url": "https://cloud.google.com/discover/what-are-ai-agents",
+      "notes": [
+        "AI agent 是圍繞目標，能理解任務並配合工具完成事情的系統",
+        "相關元件可能包含模型、記憶及工具",
+        "例子有客服、資料分析、程式協助等，也存在可靠性與倫理等問題"
+      ],
+      "concepts": [
+        "C1",
+        "C3",
+        "C5",
+        "C6"
+      ]
+    },
+    {
+      "id": "S4",
+      "org": "Microsoft Learn",
+      "title": "Introduction to AI Agents",
+      "url": "https://learn.microsoft.com/en-us/startups/build/ai/agents/intro-agents",
+      "notes": [
+        "基本元件可整理為 LLM、Instructions、Tools",
+        "AI agent 會根據目標做規劃，也能透過工具取得資訊或採取行動",
+        "不等於每個聊天程式都會幫使用者真正執行事情"
+      ],
+      "concepts": [
+        "C1",
+        "C2",
+        "C3"
+      ]
+    },
+    {
+      "id": "S5",
+      "org": "AWS",
+      "title": "AgentCore harness",
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html",
+      "notes": [
+        "agent 運作時有 orchestration loop：模型、選工具、把結果送回模型",
+        "還要處理上下文、工具失敗和執行環境",
+        "正式系統需要安全、可觀測性等額外設計"
+      ],
+      "concepts": [
+        "C4",
+        "C6"
+      ]
+    },
+    {
+      "id": "S6",
+      "org": "LangChain",
+      "title": "Thinking in the Graph API",
+      "url": "https://docs.langchain.com/oss/javascript/langgraph/thinking-in-graph-api",
+      "notes": [
+        "一個 graph 可以拆成 nodes、edges、shared state",
+        "有些 edge 固定，有些會依照結果決定下一個節點",
+        "網路或暫時性的失敗適合 retry，資料不足應回到補充資料節點"
+      ],
+      "concepts": [
+        "C7",
+        "C6"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "C1",
+      "slug": "agent",
+      "title": "AI Agent 到底是什麼",
+      "sources": [
+        "S1",
+        "S3",
+        "S4"
+      ],
+      "body": [
+        "簡單講就是幫忙做任務的 AI。不只跟人聊天，還能決定下一步要做什麼，必要時去用工具。",
+        "它通常會先看目標，過程中找資料、處理結果，再判斷事情做完沒。不是每個程式都能隨便操作電腦，還是要看它被開放什麼工具。"
+      ]
+    },
+    {
+      "id": "C2",
+      "slug": "chatbot",
+      "title": "跟一般聊天機器人差在哪",
+      "sources": [
+        "S1",
+        "S2",
+        "S4"
+      ],
+      "body": [
+        "一般問答型聊天機器人大多是問一句，回一句。",
+        "Agent 的重點不是名字，而是它能不能照目標走好幾步，用工具、看工具回來的資料，必要時再做下一步。",
+        "有些聊天產品本來就可以使用工具，所以這裡是方便理解的比較，不是絕對的分類。"
+      ]
+    },
+    {
+      "id": "C3",
+      "slug": "parts",
+      "title": "大概需要什麼零件",
+      "sources": [
+        "S1",
+        "S3",
+        "S4"
+      ],
+      "body": [
+        "模型 LLM：看懂問題，幫忙想下一步。",
+        "指令 Instructions：告訴 AI 要做什麼、哪些事不能做。",
+        "工具 Tools：像查資料、讀檔、呼叫服務。沒有開放工具的功能，不能假裝已經做了。",
+        "有些系統會加上記憶或知識庫，但不是每一種 Agent 都一定有這些。"
+      ]
+    },
+    {
+      "id": "C4",
+      "slug": "loop",
+      "title": "Agent 會一直重複的步驟",
+      "sources": [
+        "S1",
+        "S2",
+        "S5"
+      ],
+      "body": [
+        "接到任務 → 決定下一步 → 如果需要就使用工具 → 看工具回傳什麼 → 再決定下一步。",
+        "如果沒有完成就繼續跑，完成了就結束。遇到不能處理或需要權限的事情，也要停下來問人。",
+        "這個反覆檢查結果的過程，就是我們常講的 loop。"
+      ]
+    },
+    {
+      "id": "C5",
+      "slug": "example",
+      "title": "生活例子：幫忙整理一日遊",
+      "sources": [
+        "S3",
+        "S1"
+      ],
+      "body": [
+        "假設你要安排一日遊。一般聊天 AI 可能先給你一份建議。",
+        "如果是有相關權限和工具的 Agent，它可以查地點、找營業時間、比較移動距離，再排成一份行程。",
+        "這只是示範可能的流程，不代表這份作業真的幫人訂位，真實資料還是要查證。"
+      ]
+    },
+    {
+      "id": "C6",
+      "slug": "risk",
+      "title": "Agent 也會出錯",
+      "sources": [
+        "S2",
+        "S3",
+        "S5",
+        "S6"
+      ],
+      "body": [
+        "資料本身可能錯，工具也會失敗，結果不一定可靠。",
+        "像付款、寄信、刪除檔案等可能造成影響的操作，最好先得到人的同意。",
+        "如果一直卡在同一步，可以限制重試次數；來源不夠時回到找資料，不要硬編出答案。"
+      ]
+    },
+    {
+      "id": "C7",
+      "slug": "graph",
+      "title": "Workflow 和 Graph",
+      "sources": [
+        "S2",
+        "S6",
+        "S1"
+      ],
+      "body": [
+        "Workflow 是做事的順序。Graph 就是把各個步驟畫成節點，再用箭頭連起來。",
+        "例如資料夠不夠？夠就往下做；不夠就回去查。",
+        "本作業用的 graph 是：找資料 → 整理 Wiki → 查 Wiki → 做簡報 → 檢查；檢查沒過就回到前面修改。"
+      ]
+    }
+  ]
+}
